@@ -1,35 +1,32 @@
 pipeline {
     agent any
+
     stages {
-        stage('Tests') {
+        stage('Install Node.js and npm') {
             steps {
                 script {
-                    // Define the Docker image to use
-                    def dockerImage = 'node:10-stretch'
-                    
-                    // Run steps inside the Docker container
-                    docker.image(dockerImage).inside { 
-                        echo 'Building..'
-                        sh 'npm install'
-                        echo 'Testing..'
-                        sh 'npm test'
-                    }
+                    // Install Node.js and npm
+                    sh 'curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -'
+                    sh 'sudo apt-get install -y nodejs'
                 }
             }
         }
-        stage('Install and Start') {
+        
+        stage('Build and Run Backend') {
             steps {
-                // Navigate to the backend directory and install backend dependencies
                 dir('backend') {
-                    echo 'Installing backend dependencies..'
+                    // Navigate to the backend directory
                     sh 'npm install'
+                    sh 'npm start &'
                 }
-                
-                // Navigate to the frontend/e-commerce directory and start the frontend server
+            }
+        }
+
+        stage('Build and Run Frontend') {
+            steps {
                 dir('frontend/e-commerce') {
-                    echo 'Installing frontend dependencies..'
+                    // Navigate to the frontend directory
                     sh 'npm install'
-                    echo 'Starting frontend server..'
                     sh 'npm start &'
                 }
             }
