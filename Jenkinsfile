@@ -12,11 +12,20 @@ pipeline {
             }
         }
         
+        stage('Install packages') {
+            steps {
+                script {
+                    // Install packages using Docker
+                    sh "docker run --user='jenkins' --rm -v `pwd`/backend:/app -w /app node npm install"
+                    sh "docker run --user='jenkins' --rm -v `pwd`/frontend/e-commerce:/app -w /app node npm install"
+                }
+            }
+        }
+        
         stage('Build and Run Backend') {
             steps {
                 dir('backend') {
                     // Navigate to the backend directory
-                    sh 'npm install'
                     sh 'npm start &'
                 }
             }
@@ -26,7 +35,6 @@ pipeline {
             steps {
                 dir('frontend/e-commerce') {
                     // Navigate to the frontend directory
-                    sh 'npm install'
                     sh 'npm start &'
                 }
             }
