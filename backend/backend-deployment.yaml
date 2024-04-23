@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: backend
-          image: your-backend-image:latest
+          image: keerthanar228/e-commerce-backend:latest
           ports:
             - containerPort: 80

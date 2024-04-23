@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: your-frontend-image:latest
+          image: keerthanar228/e-commerce:latest
           ports:
             - containerPort: 80
