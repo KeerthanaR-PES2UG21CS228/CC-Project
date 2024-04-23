@@ -11,10 +11,13 @@ pipeline {
             steps {
                 // Install Node.js using nvm (Node Version Manager)
                 script {
-                    sh "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash"
-                    sh "source ~/.bashrc"
-                    sh "nvm install ${NODEJS_VERSION}"
-                    sh "nvm use ${NODEJS_VERSION}"
+                    sh '''
+                    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+                    export NVM_DIR="$HOME/.nvm"
+                    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                    nvm install ${NODEJS_VERSION}
+                    nvm use ${NODEJS_VERSION}
+                    '''
                 }
             }
         }
