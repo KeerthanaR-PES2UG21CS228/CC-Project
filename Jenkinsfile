@@ -1,20 +1,21 @@
 pipeline {
-    agent any
+    agent {
+        docker { 
+            image 'node:14-alpine' 
+            args '-v $PWD:/app -w /app'
+        }
+    }
 
     stages {
-        stage('Install Node.js and npm') {
+        stage('Install Node.js dependencies') {
             steps {
-                script {
-                    // Install packages using Docker
-                    sh "docker run --rm -v `pwd`:/app -w /app node:14-alpine npm install"
-                }
+                sh 'npm install'
             }
         }
         
         stage('Build and Run Backend') {
             steps {
                 dir('backend') {
-                    // Navigate to the backend directory
                     sh 'npm start &'
                 }
             }
@@ -23,7 +24,6 @@ pipeline {
         stage('Build and Run Frontend') {
             steps {
                 dir('frontend/e-commerce') {
-                    // Navigate to the frontend directory
                     sh 'npm start &'
                 }
             }
