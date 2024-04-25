@@ -5,6 +5,7 @@ pipeline {
             steps {
                 // Change directory to backend
                 dir('backend') {
+                    sh 'node --version'
                     // Install dependencies
                     sh 'npm install'
                     // Start the backend server
