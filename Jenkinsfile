@@ -9,7 +9,7 @@ pipeline {
                     // Install dependencies
                     sh 'npm install'
                     // Start the backend server
-                    sh 'npm start'
+                    sh 'npm start &'
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
                     // Install dependencies
                     sh 'npm install'
                     // Start the frontend server
-                    sh 'npm start'
+                    sh 'npm start &'
                 }
             }
         }
