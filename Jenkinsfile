@@ -5,8 +5,6 @@ pipeline {
             steps {
                 // Change directory to backend
                 dir('backend') {
-                    sh 'apt-get install -y nodejs'
-                    sh 'apt-get install -y npm'
                     sh 'node --version'
                     // Install dependencies
                     sh 'npm install'
